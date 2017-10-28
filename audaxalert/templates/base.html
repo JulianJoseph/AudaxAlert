@@ -20,8 +20,8 @@
                 <nav>
                     <ul>
                         <li><a href="{{ url_for('add') }}">Add URL</a></li>
-                        {% if current_user.is_authenticated() %}
-                            <li><a href="{{ url_for('user', username=current_user.username) }}">
+                        {% if current_user.is_authenticated %}
+                            <li><a href="{{ url_for('user', audax_membership_id=current_user.audax_membership_id) }}">
                                 My Links</a></li>
                             <li><a href="{{ url_for('logout') }}">Sign out</a></li>
                         {% else %}

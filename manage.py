@@ -10,8 +10,8 @@ manager = Manager(app)
 def initdb():
     db.drop_all()
     db.create_all()
-    db.session.add(User(email="jules@joseph-net.co.uk", audax_membership_id=12348, current_season_rides=0, club="Dulwich Paragon", current_season_club_points=0))
-    db.session.commit()  
+    #db.session.add(User(email="jules@joseph-net.co.uk", audax_membership_id=12348, current_season_rides=0, club="Dulwich Paragon", current_season_club_points=0))
+    #db.session.commit()  
     print("Initialised the database")
 
 @manager.command

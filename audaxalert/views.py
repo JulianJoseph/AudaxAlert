@@ -1,15 +1,14 @@
 from flask import Flask, render_template, url_for, request, redirect, flash
 from audaxalert import app, db, login_manager
-#from forms import BookmarkForm
-from . forms import LoginForm
+from . forms import LoginForm, SignupForm
 from . models import User
 from flask_login import login_required, login_user, logout_user, current_user
 
 bookmarks = []
 
-@login_manager.user_loader
-def load_user(userid):
-    return User.query.get(int(userid))
+# @login_manager.user_loader
+# def load_user(userid):
+#     return User.query.get(int(userid))
 
 @login_manager.user_loader
 def logged_in_user(userid):
@@ -53,12 +52,12 @@ def user(audax_membership_id):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.get_by_email(form.username.data)
+        user = User.get_by_userid(form.userid.data)
         user = User.query.filter_by(audax_membership_id=form.userid.data).first()
         if user is not None and user.check_password(form.password.data):
             login_user(user, form.remember_me.data)
-            flash("Logged in successfully as {}.".format(user.userid))
-            return redirect(request.args.get('next') or url_for('user',username=user.username))
+            flash("Logged in successfully as {}.".format(user.email))
+            return redirect(request.args.get('next') or url_for('user',audax_membership_id=user.audax_membership_id))
         flash('Incorrect username or password.')
     return render_template("login.html", form=form)
 
@@ -66,6 +65,19 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+    form = SignupForm()
+    if form.validate_on_submit():
+        user = User(email=form.email.data, 
+                    audax_membership_id=form.userid.data,
+                    password = form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Welcome, {}! Please login.'.format(user.email))
+        return redirect(url_for('login'))
+    return render_template("signup.html", form=form)
 
 
 @app.errorhandler(404)
