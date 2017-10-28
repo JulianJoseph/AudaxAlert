@@ -1,13 +1,19 @@
 from flask import Flask, render_template, url_for, request, redirect, flash
-from audaxalert import app, db
+from audaxalert import app, db, login_manager
 #from forms import BookmarkForm
+from . forms import LoginForm
 from . models import User
+from flask_login import login_required, login_user, logout_user, current_user
 
 bookmarks = []
 
-#fake login
-def logged_in_user():
-    return User.query.filter_by(email='jules@joseph-net.co.uk'),first()
+@login_manager.user_loader
+def load_user(userid):
+    return User.query.get(int(userid))
+
+@login_manager.user_loader
+def logged_in_user(userid):
+    return User.query.get(int(userid))
 
 def store_bookmark(url):
     bookmarks.append(dict( 
@@ -26,6 +32,7 @@ def index():
 
 
 @app.route('/add', methods=['GET', 'POST'])
+@login_required
 def add():
     print('add route')
     form = BookmarkForm()
@@ -41,6 +48,24 @@ def add():
 def user(audax_membership_id):
     user = User.query.filter_by(audax_membership_id=audax_membership_id).first_or_404()
     return render_template('user.html', user=user)
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.get_by_email(form.username.data)
+        user = User.query.filter_by(audax_membership_id=form.userid.data).first()
+        if user is not None and user.check_password(form.password.data):
+            login_user(user, form.remember_me.data)
+            flash("Logged in successfully as {}.".format(user.userid))
+            return redirect(request.args.get('next') or url_for('user',username=user.username))
+        flash('Incorrect username or password.')
+    return render_template("login.html", form=form)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 @app.errorhandler(404)

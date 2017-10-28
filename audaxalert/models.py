@@ -1,7 +1,10 @@
 import datetime
 from audaxalert import db
+from flask_login import UserMixin
+from werkzeug.security import check_password_hash, generate_password_hash
 
-class User(db.Model):
+
+class User(db.Model, UserMixin):
     __tablename__ = "User"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True)
@@ -12,6 +15,21 @@ class User(db.Model):
     current_season_club_points = db.Column(db.Integer, nullable=False)
     created_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)    
 
+    @property
+    def password(self):
+        raise AttributeError('password: write-only field')
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    @staticmethod
+    def get_by_email(userid):
+        return User.query.filter_by(audax_membership_id=userid).first()
+
     def __rep__(self):
-        return '<User %r>' % self.email
+        return '<User %r>' % self.audax_membership_id
 

@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 app = Flask(__name__)
 
@@ -11,6 +12,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'au
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = 'false'
 app.config['DEBUG'] = True
 db = SQLAlchemy(app)
+
+#configure authentication
+login_manager = LoginManager()
+login_manager.session_protection = "strong"
+login_manager.init_app(app)
 
 from . import models
 from . import views
