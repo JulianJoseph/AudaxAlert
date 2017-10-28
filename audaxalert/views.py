@@ -37,6 +37,11 @@ def add():
         return redirect(url_for('index'))
     return render_template('add.html', form=form)
 
+@app.route('/user/<audax_membership_id>')
+def user(audax_membership_id):
+    user = User.query.filter_by(audax_membership_id=audax_membership_id).first_or_404()
+    return render_template('user.html', user=user)
+
 
 @app.errorhandler(404)
 def page_not_found(e):

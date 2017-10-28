@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+Page for User {{ user.audax_membership_id }}
+{% endblock %}
+
+{% block content %}
+<article>
+    <header>
+        {{ user.email }}
+        {{ user.club }}
+
+    </header>
+
+</article>
+{% endblock %}
