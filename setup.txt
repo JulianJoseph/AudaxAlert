@@ -1,0 +1,11 @@
+virtualenv = audaxalert
+
+database:
+- email
+- audax membership number
+- current_season_rides
+
+
+PythonAnywhere
+
+/home/julesjoseph/.virtualenvs/audaxalert/bin/python /home/julesjoseph/audaxalert/audaxalertprocess.py	
