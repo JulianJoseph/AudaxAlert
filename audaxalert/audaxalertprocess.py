@@ -13,7 +13,7 @@ def process_users():
     conn = get_db_connection()
 
     user_cursor = conn.cursor()
-    user_cursor.execute("SELECT id, email, audax_membership_id, current_season_rides FROM users")
+    user_cursor.execute("SELECT id, email, audax_id, current_season_rides FROM users")
 
     for user in user_cursor.fetchall():
         user_id = user[0]

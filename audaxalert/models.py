@@ -9,7 +9,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True)
     password_hash = db.Column(db.String)
-    audax_membership_id = db.Column(db.Integer, nullable=False, unique=True)
+    audax_id = db.Column(db.Integer, nullable=False, unique=True)
     current_season_rides = db.Column(db.Integer, default=0)
     club = db.Column(db.String(80))
     current_season_club_points = db.Column(db.Integer, default=0)
@@ -27,9 +27,9 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
 
     @staticmethod
-    def get_by_userid(userid):
-        return User.query.filter_by(audax_membership_id=userid).first()
+    def get_by_audax_id(audax_id):
+        return User.query.filter_by(audax_id=audax_id).first()
 
     def __rep__(self):
-        return '<User %r>' % self.audax_membership_id
+        return '<User %r>' % self.audax_id
 

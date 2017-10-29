@@ -43,21 +43,21 @@ def add():
         return redirect(url_for('index'))
     return render_template('add.html', form=form)
 
-@app.route('/user/<audax_membership_id>')
-def user(audax_membership_id):
-    user = User.query.filter_by(audax_membership_id=audax_membership_id).first_or_404()
+@app.route('/user/<audax_id>')
+def user(audax_id):
+    user = User.query.filter_by(audax_id=audax_id).first_or_404()
     return render_template('user.html', user=user)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.get_by_userid(form.userid.data)
-        user = User.query.filter_by(audax_membership_id=form.userid.data).first()
+        user = User.get_by_audax_id(form.userid.data)
+       #user = User.query.filter_by(audax_membership_id=form.userid.data).first()
         if user is not None and user.check_password(form.password.data):
             login_user(user, form.remember_me.data)
             flash("Logged in successfully as {}.".format(user.email))
-            return redirect(request.args.get('next') or url_for('user',audax_membership_id=user.audax_membership_id))
+            return redirect(request.args.get('next') or url_for('user',audax_id=user.audax_id))
         flash('Incorrect username or password.')
     return render_template("login.html", form=form)
 
@@ -71,7 +71,7 @@ def signup():
     form = SignupForm()
     if form.validate_on_submit():
         user = User(email=form.email.data, 
-                    audax_membership_id=form.userid.data,
+                    audax_id=form.userid.data,
                     password = form.password.data)
         db.session.add(user)
         db.session.commit()
