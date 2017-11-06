@@ -19,9 +19,8 @@
                 <a href="{{ url_for('index') }}"><h1 class="title">AudaxAlert</h1></a>
                 <nav>
                     <ul>
-                        <li><a href="{{ url_for('add') }}">Add URL</a></li>
                         {% if current_user.is_authenticated %}
-                            <li><a href="{{ url_for('user', audax_membership_id=current_user.audax_membership_id) }}">
+                            <li><a href="{{ url_for('user', audax_id=current_user.audax_id) }}">
                                 My Links</a></li>
                             <li><a href="{{ url_for('logout') }}">Sign out</a></li>
                         {% else %}

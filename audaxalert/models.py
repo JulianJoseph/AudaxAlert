@@ -7,7 +7,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 class User(db.Model, UserMixin):
     __tablename__ = "User"
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True)
+    email = db.Column(db.String(120))
     password_hash = db.Column(db.String)
     audax_id = db.Column(db.Integer, nullable=False, unique=True)
     current_season_rides = db.Column(db.Integer, default=0)
