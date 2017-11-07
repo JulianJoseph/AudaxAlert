@@ -77,22 +77,22 @@ body {
    =================== */
 
 .header-container {
-    border-bottom: 20px solid #0D3E5B;
+    border-bottom: 20px solid #ffffff;
 }
 
 .footer-container,
 .main aside {
-    border-top: 20px solid #0D3E5B;
+    border-top: 20px solid #ffffff
 }
 
 .header-container,
 .footer-container,
 .main aside {
-    background: #326786;
+    background: #ffffff;
 }
 
 .title {
-    color: white;
+    color: black;
 }
 
 /* ==============
@@ -114,7 +114,7 @@ nav a {
     font-weight: bold;
 
     color: white;
-    background: #0D3E5B;
+    background: rgb(91, 13, 13);
 }
 
 nav a:hover,
@@ -163,6 +163,7 @@ nav a:hover {
 /* link styling */
 a {
     color: #8F540D;
+    padding-right: 10px;
 }
 a:hover, aside a:hover, aside a:visited:hover {
     color: #D39447;
@@ -173,14 +174,14 @@ a:visited {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #1E5373;
+    color: black;
 }
 
 .main aside h3,
 footer h3,
 footer a,
 footer a:visited {
-    color: white;
+    color:black;
 
 }
 
