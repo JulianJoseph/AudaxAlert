@@ -68,7 +68,7 @@ def check_rider_list(audax_id, season):
         cells = row.find_all("td")
         if(len(cells) == 9):
             event_name = cells[4]
-            print(event_name.text)
+            #print(event_name.text)
             ride_count = ride_count + 1
 
     return ride_count
