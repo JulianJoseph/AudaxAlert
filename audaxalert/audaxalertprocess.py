@@ -31,6 +31,8 @@ def process_users():
             update_stored_current_rides(conn, user_id, latest_current_season_rides)
             send_alert(email, audax_id)
 
+        update_last_checked(conn, user_id)
+
 
 def send_alert(address, audax_id):
     url = RIDER_LIST_URL.format(CURRENT_SEASON, audax_id)
