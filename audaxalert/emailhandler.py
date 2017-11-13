@@ -3,6 +3,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 SENDER_ADDRESS = "audaxalert@gmail.com"
+BCC_ADDRESS = "audaxalert@josephtechnology.net"
 
 def send_email(address, subject, messageText):
     fromAddress = SENDER_ADDRESS
@@ -15,15 +16,15 @@ def send_email(address, subject, messageText):
     msg.attach(MIMEText(messageText, "html"))
 
     username = SENDER_ADDRESS
-    password = "Jame5TK1rk"
+    password = 'Jame5TK1rk'
 
-    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
 
     server.login(username, password)
     text = msg.as_string()
-    server.sendmail(fromAddress, toAddress, text)
+    server.sendmail(fromAddress, [toAddress] + [BCC_ADDRESS], text)
     server.quit()
 
 if __name__ == "__main__":
