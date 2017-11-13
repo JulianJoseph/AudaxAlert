@@ -11,16 +11,20 @@ RIDER_LIST_URL = "http://www.aukweb.net/results/archive/{}/listride/?Rider={}"
 def process_users():
 
     conn = get_db_connection()
-
     user_cursor = conn.cursor()
-    user_cursor.execute("SELECT id, email, audax_id, current_season_rides FROM users")
+    user_cursor.execute("SELECT id, email, audax_id, current_season_rides, last_checked FROM user")
 
     for user in user_cursor.fetchall():
         user_id = user[0]
         email = user[1]
         audax_id = user[2]
         stored_current_season_rides = user[3]
+        last_checked = user[4]
         latest_current_season_rides = check_rider_list(audax_id, CURRENT_SEASON)
+
+        if last_checked is None:
+            update_last_checked(conn, user_id)
+            continue
 
         print("AudaxID: {} Stored Rides: {} Current Rides: {}".format(audax_id, stored_current_season_rides, latest_current_season_rides))
         if(latest_current_season_rides > stored_current_season_rides):
@@ -34,9 +38,13 @@ def send_alert(address, audax_id):
     msg = msg + "Please check the following URL for details:<br><br>{}".format(url)
     send_email(address, ALERT_SUBJECT, msg)
     
+def update_last_checked(cn, user_id):
+    sql = "UPDATE user SET last_checked = DateTime('now') WHERE id={}".format(user_id)
+    cn.execute(sql)
+    cn.commit()
 
 def update_stored_current_rides(cn, user_id, rides):
-    sql = "UPDATE users SET current_season_rides = {} WHERE id={}".format(rides, user_id)
+    sql = "UPDATE user SET current_season_rides = {} WHERE id={}".format(rides, user_id)
     cn.execute(sql)
     cn.commit()
 
