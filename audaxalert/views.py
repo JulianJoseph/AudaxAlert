@@ -37,6 +37,10 @@ def confirm():
 def about():
     return render_template('about.html')
 
+@app.route("/contact")
+def contact():
+    return render_template('contact.html')
+
 
 @app.errorhandler(404)
 def page_not_found(e):
