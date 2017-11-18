@@ -8,7 +8,7 @@ class SignupForm(Form):
     userid = StringField('Audax ID',
                     validators=[
                         DataRequired(), Length(3, 80),
-                        Regexp('^[A-Za-z0-9_]{3,}$',
+                        Regexp('^[0-9]{3,8}$',
                             message='Please enter your Audax membership id, omitting any letters')])
 
     email = StringField('Email',

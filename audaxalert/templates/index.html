@@ -7,14 +7,18 @@ Home
 {% block content %}
     <article>
         <header>
-            <p>All members of Audax will appreciate the satisfaction of completing a ride, and having their brevet card validated. 
+            <p>All members of <a href="http://http://www.aukweb.net/">Audax</a> (The Long Distance Cyclists' Association) will appreciate the satisfaction of completing 
+                a ride, and having their brevet card validated. 
                 To accompany that, for some, there is the added satisfaction of seeing your ride appear in the official Audax archive of results
                 on their <a href="http://www.aukweb.net/results/">website</a>.</p>
             <p>Understandably, there is always a lag between completion of the event, and the result appearing on the website.
                 This is where AudaxAlert comes in handy.</p>
             <p>All you need to do is sign up with your Audax Membership Number (omitting any leading characters) and your email address. We will then monitor your
-                results page at regular intervals and send you an email as soon as a new ride appears.
+                results page at regular intervals and send you an email as soon as your latest ride appears.
             </p>
+            <p>
+                If you are interested in this free service, just go to the <a href="{{ url_for('signup') }}">Sign Up</a> page and register. 
+            </p>  
         </header>
     </article>
 {% endblock %}

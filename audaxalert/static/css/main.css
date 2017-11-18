@@ -64,7 +64,8 @@ textarea {
    ========================================================================== */
 
 body {
-    font: 16px/26px Helvetica, Helvetica Neue, Arial;
+    font: 16px/26px; /* Helvetica, Helvetica Neue, Arial;*/
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .wrapper {
@@ -163,8 +164,8 @@ nav a:hover {
 /* link styling */
 a {
     color: #8F540D;
-    padding-right: 10px;
 }
+
 a:hover, aside a:hover, aside a:visited:hover {
     color: #D39447;
 }
@@ -268,9 +269,9 @@ input, button {
 
     .header-container,
     .main aside {
-        -webkit-box-shadow: 0 5px 10px #aaa;
-           -moz-box-shadow: 0 5px 10px #aaa;
-                box-shadow: 0 5px 10px #aaa;
+         -webkit-box-shadow: 0 1px 5px gray;
+           -moz-box-shadow: 0 1px 5px gray;
+                box-shadow: 0 1px 5px gray; 
     }
 
 /* ============
