@@ -24,6 +24,7 @@ def process_users():
 
         if last_checked is None:
             update_last_checked(conn, user_id)
+            update_stored_current_rides(conn, user_id, latest_current_season_rides)
             continue
 
         print("AudaxID: {} Stored Rides: {} Current Rides: {}".format(audax_id, stored_current_season_rides, latest_current_season_rides))
