@@ -8,7 +8,7 @@ from . models import User
 class SignupForm(FlaskForm):
     userid = StringField('Audax ID',
                     validators=[
-                        DataRequired(), Length(3, 80),
+                        DataRequired(), Length(3, 8),
                         Regexp('^[0-9]{3,8}$',
                             message='Please enter your Audax membership id, omitting any letters')])
 
