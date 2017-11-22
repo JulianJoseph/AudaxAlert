@@ -9,3 +9,6 @@ database:
 PythonAnywhere
 
 /home/julesjoseph/.virtualenvs/audaxalert/bin/python /home/julesjoseph/audaxalert/audaxalertprocess.py	
+
+reCaptcha
+https://www.google.com/recaptcha/admin#site/339347269?setup
