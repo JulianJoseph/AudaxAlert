@@ -3,6 +3,7 @@ import requests
 import sqlite3
 import os
 from emailhandler import send_email
+import dbhelper
 
 CURRENT_SEASON = 2018
 ALERT_SUBJECT = "Audax Alert"
@@ -10,7 +11,7 @@ RIDER_LIST_URL = "http://www.aukweb.net/results/archive/{}/listride/?Rider={}"
 
 def process_users():
 
-    conn = get_db_connection()
+    conn = dbhelper.get_db_connection()
     user_cursor = conn.cursor()
     user_cursor.execute("SELECT id, email, audax_id, current_season_rides, last_checked FROM user")
 
@@ -50,12 +51,6 @@ def update_stored_current_rides(cn, user_id, rides):
     sql = "UPDATE user SET current_season_rides = {} WHERE id={}".format(rides, user_id)
     cn.execute(sql)
     cn.commit()
-
-def get_db_connection():
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    databaseUri = os.path.join(basedir, "audaxalert.db")
-    conn = sqlite3.connect(databaseUri)
-    return conn    
 
 def check_rider_list(audax_id, season):
     url = RIDER_LIST_URL.format(season, audax_id)
