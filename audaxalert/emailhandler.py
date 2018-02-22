@@ -16,7 +16,7 @@ def send_email(address, subject, messageText):
     msg.attach(MIMEText(messageText, "html"))
 
     username = SENDER_ADDRESS
-    password = 'Jame5TK1rk'
+    password = 's6cgHVe4GBg7'
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.ehlo()
