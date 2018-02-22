@@ -6,8 +6,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-emailhandler.py
-
 # C extensions
 *.so
 
@@ -142,3 +140,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+audaxalert/emailhandler.py
