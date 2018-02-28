@@ -1,23 +1,39 @@
 from bs4 import BeautifulSoup
 import requests
-
-# Method:
-# get list of users
-# 1: get url for user
-# 2: get first event url for that user
-# 3: get html back for the event url
-# 4: find first result for current user in the event html
-# 5: get club from club column
-# 6: get list of clubs from table
-# 7: if club not in table then insert
+import dbhelper
 
 
 RIDER_LIST_URL = "http://www.aukweb.net/results/archive/{}/listride/?Rider={}"
 CURRENT_SEASON = 2018
 URL_PREFIX = "http://www.aukweb.net"
 
-#event_url = get_event_url_for_user(12348)
-#get_event_data(event_url)
+def process_user_club_membership():
+    conn = dbhelper.get_db_connection()
+    user_cursor = conn.cursor()
+    user_cursor.execute("SELECT id, audax_id FROM user")
+
+    for user in user_cursor.fetchall():
+        audax_id = user[1]
+        event_url = get_event_url_for_user(audax_id)
+        if event_url:
+            user_club = get_club_from_event_data(event_url, audax_id)
+            if user_club:
+                add_club(conn, user_club)
+                update_user_club(conn, user_club, audax_id)
+                print(user[1])
+                print(user_club)
+
+
+def add_club(cn, club_name):
+    sql = "INSERT INTO Club (name, created_date) SELECT '{}', DateTime('now') WHERE NOT EXISTS (SELECT * FROM Club WHERE name = '{}')".format(club_name, club_name)
+    cn.execute(sql)
+    cn.commit()   
+
+def update_user_club(cn, club_name, audax_id):
+    sql = "UPDATE user SET club = '{}' WHERE audax_id = {}".format(club_name, audax_id)
+    cn.execute(sql)
+    cn.commit
+    
 
 def get_club_name_from_result_row(row):
     club_name_text = row.contents[4]
@@ -29,7 +45,7 @@ def get_club_name_from_result_row(row):
     club = club.strip()
     return club
     
-def get_event_data(url, audax_id):
+def get_club_from_event_data(url, audax_id):
     r = requests.get(url)
     data = r.text
     soup = BeautifulSoup(data, "lxml")
@@ -39,11 +55,9 @@ def get_event_data(url, audax_id):
         link = row.find('a')
         if link and link.text.strip() == str(audax_id):
             club = get_club_name_from_result_row(row)
-            print(club)
-            break
+            return club
 
 def get_event_url_for_user(audax_id):
-    print(audax_id)
     url = RIDER_LIST_URL.format(CURRENT_SEASON, audax_id)
 
     r = requests.get(url)
@@ -55,11 +69,10 @@ def get_event_url_for_user(audax_id):
     urls = table.find_all('a', href=True)
     if urls:
         event_url = URL_PREFIX + urls[0]['href']
-        print(event_url)
         return event_url
         
 
 if __name__ == "__main__":
-    get_event_data("http://www.aukweb.net/results/detail/2018/listevent/?Ride=17-681", 12348)
-#    get_event_url_for_user(12348);
+    process_user_club_membership()
+
 

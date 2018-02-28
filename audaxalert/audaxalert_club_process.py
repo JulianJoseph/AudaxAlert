@@ -29,7 +29,6 @@ def process_clubs():
 
 
         if club_points > club_current_season_points:
-            #send alert to all club members
             update_club_stored_points(conn, club_name, club_points)
             send_alert_to_all_club_members(conn, club_name)
 

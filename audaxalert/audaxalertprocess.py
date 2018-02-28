@@ -10,7 +10,6 @@ ALERT_SUBJECT = "Audax Alert"
 RIDER_LIST_URL = "http://www.aukweb.net/results/archive/{}/listride/?Rider={}"
 
 def process_users():
-
     conn = dbhelper.get_db_connection()
     user_cursor = conn.cursor()
     user_cursor.execute("SELECT id, email, audax_id, current_season_rides, last_checked FROM user")
