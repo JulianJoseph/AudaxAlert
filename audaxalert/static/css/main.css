@@ -65,7 +65,8 @@ textarea {
 
 body {
     font: 16px/26px; /* Helvetica, Helvetica Neue, Arial;*/
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    /*font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;*/
+    font-family: Verdana,Courier,Arial, Georgia, Helvetica;
 }
 
 .wrapper {
@@ -90,6 +91,10 @@ body {
 .footer-container,
 .main aside {
     background: #ffffff;
+}
+
+.header-container img {
+    vertical-align: bottom;
 }
 
 .title {

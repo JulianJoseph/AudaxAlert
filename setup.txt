@@ -12,3 +12,18 @@ PythonAnywhere
 
 reCaptcha
 https://www.google.com/recaptcha/admin#site/339347269?setup
+
+How to run locally:
+
+dos prompt:
+rem source coce
+cd C:\Users\Jules\Documents\GitHub\flask\audaxalert
+rem start virtual env
+workon audaxalert 
+
+
+rem start server
+python manage.py runserver
+
+rem quit virtual env
+deactivate
