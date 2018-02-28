@@ -71,4 +71,5 @@ def check_rider_list(audax_id, season):
     return ride_count
     
 if __name__ == "__main__":
-    process_users();
+    if dbhelper.run_every_hour(2):
+        process_users()
