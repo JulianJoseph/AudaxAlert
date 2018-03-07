@@ -32,7 +32,7 @@ def add_club(cn, club_name):
 def update_user_club(cn, club_name, audax_id):
     sql = "UPDATE user SET club = '{}' WHERE audax_id = {}".format(club_name, audax_id)
     cn.execute(sql)
-    cn.commit
+    cn.commit()
     
 
 def get_club_name_from_result_row(row):
